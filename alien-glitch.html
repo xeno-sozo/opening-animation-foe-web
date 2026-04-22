@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AZFARUL // ANOMALY DETECTED</title>
+    <style>
+        :root {
+            --void-bg: #010103;
+            --alien-blood: #c400ff;
+            --alien-glow: #00ffd5;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--void-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            cursor: none;
+            font-family: monospace;
+        }
+
+        /* The hidden SVG filter that warps reality */
+        .svg-filters { display: none; }
+
+        /* The Dimensional Rift Cursor */
+        #rift-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle, transparent 20%, var(--alien-blood) 80%, transparent 100%);
+            box-shadow: 0 0 40px var(--alien-blood), inset 0 0 20px #000;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(1);
+            z-index: 9999;
+            mix-blend-mode: color-dodge;
+            transition: transform 0.1s ease-out;
+            animation: pulse-rift 2s infinite alternate;
+        }
+
+        @keyframes pulse-rift {
+            0% { transform: translate(-50%, -50%) scale(0.9) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) scale(1.1) rotate(180deg); filter: hue-rotate(45deg); }
+        }
+
+        /* The Container under Alien Influence */
+        #alien-container {
+            text-align: center;
+            filter: url('#liquid-distortion');
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-text {
+            font-size: 4rem;
+            color: var(--alien-glow);
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            font-weight: 900;
+            text-shadow: 0 0 20px var(--alien-glow), 0 0 50px var(--alien-blood);
+            position: relative;
+            margin: 0;
+        }
+
+        .sub-text {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            color: #fff;
+            letter-spacing: 5px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+
+    <svg class="svg-filters">
+        <defs>
+            <filter id="liquid-distortion">
+                <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" id="turbulence" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="150" xChannelSelector="R" yChannelSelector="G" id="displacement" />
+            </filter>
+        </defs>
+    </svg>
+
+    <div id="rift-cursor"></div>
+
+    <div id="alien-container">
+        <h1 class="hero-text" id="alien-name" data-target="AZFARUL HOQUE CHOWDHURY">⍙⎅⎎⏃⍀⎍⌰ ⊑⍜⍾⎍⟒ ☊⊑⍜⍙⎅⊑⎍⍀⊬</h1>
+        <div class="sub-text" id="sub-title" data-target="CREATIVE CHEAT CODE">☊⍀⟒⏃⏁⟟⎐⟒ ☊⊑⟒⏃⏁ ☊⍜⎅⟒</div>
+    </div>
+
+    <script>
+        const cursor = document.getElementById('rift-cursor');
+        const displacement = document.getElementById('displacement');
+        const turbulence = document.getElementById('turbulence');
+        const nameEl = document.getElementById('alien-name');
+        const subEl = document.getElementById('sub-title');
+        
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        
+        // Custom Rift Cursor Follower
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = `${mouseX}px`;
+            cursor.style.top = `${mouseY}px`;
+            
+            // Alter the fractal noise frequency based on mouse position to make the "liquid" react
+            turbulence.setAttribute('baseFrequency', `${0.01 + (mouseX / window.innerWidth) * 0.05} ${0.01 + (mouseY / window.innerHeight) * 0.05}`);
+        });
+
+        // The "Alien Translation" Stabilization Sequence
+        const alienGlyphs = "⍙⎅⎎⏃⍀⎍⌰⊑⍜⍾⟒☊⊬⏣⎍⍑⍎⍚⍛⍜⍝⍢⍣⍤⍥⍨⍩⍪";
+        
+        function translateAlien(element, duration) {
+            const targetText = element.getAttribute('data-target');
+            let iterations = 0;
+            const maxIterations = 60; // How long it takes to decode
+
+            const interval = setInterval(() => {
+                element.innerText = targetText.split('').map((char, index) => {
+                    if (char === ' ') return ' ';
+                    if (index < (iterations / maxIterations) * targetText.length) {
+                        return targetText[index];
+                    }
+                    return alienGlyphs[Math.floor(Math.random() * alienGlyphs.length)];
+                }).join('');
+
+                iterations++;
+                if (iterations > maxIterations) clearInterval(interval);
+            }, duration / maxIterations);
+        }
+
+        // The Boot-Up Sequence (Liquid reality stabilizes into solid code)
+        window.onload = () => {
+            let currentScale = 150; // Starts highly distorted
+            
+            // Smoothly reduce displacement map scale to 0 (stabilize)
+            const stabilize = setInterval(() => {
+                currentScale -= 2;
+                displacement.setAttribute('scale', currentScale);
+                
+                if (currentScale <= 0) {
+                    displacement.setAttribute('scale', 0);
+                    clearInterval(stabilize);
+                    
+                    // Once stabilized, begin translation
+                    setTimeout(() => {
+                        translateAlien(nameEl, 2000);
+                        translateAlien(subEl, 2500);
+                    }, 300);
+                }
+            }, 30);
+        };
+
+        // When you click, reality tears open again momentarily
+        window.addEventListener('mousedown', () => {
+            displacement.setAttribute('scale', 40);
+            cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+            setTimeout(() => {
+                displacement.setAttribute('scale', 0);
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            }, 150);
+        });
+    </script>
+</body>
+</html>
