@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body { background: #050505; color: #ff3e3e; font-family: 'Courier New', monospace; overflow: hidden; margin: 0; }
+        #log { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 20px; font-size: 12px; line-height: 1.2; pointer-events: none; opacity: 0.7; }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent 20%, #000 90%); z-index: 10; pointer-events: none; }
+        .critical { color: #fff; background: #ff3e3e; font-weight: bold; animation: blink 0.2s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+        #ui { position: relative; z-index: 20; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+        h1 { font-size: 5rem; letter-spacing: -5px; color: #fff; text-shadow: 2px 2px #ff3e3e; }
+    </style>
+</head>
+<body>
+    <div id="log"></div>
+    <div id="overlay"></div>
+    <div id="ui">
+        <h1 id="identity">AZFARUL</h1>
+        <p>[ ACCESS GRANTED // CORE_STABILIZED ]</p>
+    </div>
+
+    <script>
+        const log = document.getElementById('log');
+        const lines = [
+            "BOOT_INIT: ATTEMPTING TO ACCESS CORE...", "CRITICAL_ERROR: MEM_ADDR_0x004F3_REJECTED",
+            "SATA_DRIVE_FAIL: GROUND_PIN_DISCONNECTED", "RETRYING...", "BYPASSING_LOGIC_GATES...",
+            "SYSTEM_HIJACK: AZFARUL_ENGINE_DETECTED", "OPTIMIZING_DATA_STRUCTURES..."
+        ];
+
+        function createLog() {
+            const line = document.createElement('div');
+            line.innerText = `[${new Date().getTime()}] ${lines[Math.floor(Math.random() * lines.length)]}`;
+            if (Math.random() > 0.9) line.className = 'critical';
+            log.appendChild(line);
+            if (log.childNodes.length > 50) log.removeChild(log.firstChild);
+        }
+        setInterval(createLog, 50);
+
+        // Interactive "Glitch" on hover
+        document.getElementById('identity').addEventListener('mouseover', () => {
+            document.body.style.backgroundColor = "#ff3e3e";
+            setTimeout(() => document.body.style.backgroundColor = "#050505", 50);
+        });
+    </script>
+</body>
+</html>
